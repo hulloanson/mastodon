@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - "main"
+      - "tinkering"
     tags:
       - "*"
 jobs:
@@ -19,16 +19,16 @@ jobs:
       - uses: docker/metadata-action@v3
         id: meta
         with:
-          images: tootsuite/mastodon
+          images: hulloanson/mastodon
           flavor: |
             latest=auto
           tags: |
-            type=edge,branch=main
+            type=edge,branch=tinkering
             type=semver,pattern={{ raw }}
       - uses: docker/build-push-action@v2
         with:
           context: .
           push: true
           tags: ${{ steps.meta.outputs.tags }}
-          cache-from: type=registry,ref=tootsuite/mastodon:latest
+          cache-from: type=registry,ref=hulloanson/mastodon:latest
           cache-to: type=inline
